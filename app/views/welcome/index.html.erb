@@ -1,0 +1,99 @@
+<% content_for :css, stylesheet_link_tag("style") %>
+
+
+
+<section class="productItem">
+  <div class="sectionVisual sectionVisual--productItem">
+  <%= image_tag "product_mv.png", height: 700, width: 1400 %>
+ </div>
+  <div class="inner">
+    <h1 class="productItem__ttl">最新生冷<span></span></h1>
+    <ul class="productItem__list" >
+    <% @articles.each do |a| %>
+      <li id="content_<%= a.id %>">
+        <a href="#" class="effect">
+          <div class="productItem__name">
+            <span><%= a.title %></span>
+            <p>97Gun</p>
+         </div>
+          <div class="productItem__thumb thumb">
+          <%= image_tag  a.img, height: "360", width: "590" %>
+
+          </div>
+          <%= raw a.content %>
+
+         <div class="like-or-not">
+              <% if current_user.is_admin == true %>
+              <button class="nt-new-button nt-new-button-effect nt-remove" style="border-radius:0px;" data-id="<%= a.id %>" >删除</button>
+             
+                <% if a.good == '1' %>
+                <button class="nt-new-button nt-new-button-effect nt-cut" style="border-radius:0px;display: inline-block" data-id="<%= a.id %>" id="btn_<%= a.id %>">已加精</button>
+                <% else %>
+                <button class="nt-new-button nt-new-button-effect nt-add" style="border-radius:0px;display: inline-block" data-id="<%= a.id %>", id="btn_<%= a.id %>">加精</button>
+                <% end %>
+              <% else %>
+                 <button class="nt-new-button nt-new-button-effect" style="border-radius:0px;">确实很冷</button>
+                <button class="nt-new-button nt-new-button-effect" style="border-radius:0px;display: inline-block">有点热啊</button>
+              <% end %>
+              <button class="nt-new-button-primary" style="border-radius:0px;float:right;position: absolute;top: 0;right: -199px;" data-id="<%= a.id %>">收藏到我的冰箱</button>
+          </div>
+          </a>
+      </li>
+      <% end %>
+
+    </ul>
+  </div>
+<!-- /.product -->
+</section>
+
+<div style="width:940px;margin-left:13%;">
+    <%= will_paginate @articles %>
+</div>
+
+<div id="pagetop" style="margin-top: 40px;">
+  <div class="inner">
+    <p><a href="index.html#wrapper">回到顶部</a></p>
+  </div>
+</div>
+<div class="area-tag">
+  <a href="" class="botton-active">全部</a>
+  <% @categroys.each do |c| %>
+    <a href="/some_articles/<%= c.id %>"><%= c.name %></a>
+  <% end %>
+</div>
+<script>
+  $('.nt-new-button-primary').each(function(){
+    $(this).click(function(){
+      var id = $(this).attr('data-id');
+     $.get('/collection',{id: id},function(data){
+     })
+    })
+  })
+
+
+  $('.nt-remove').click(function(){
+      if(confirm("确定删除?")){
+        var id = $(this).attr('data-id');
+        $.get('/removed',{id:id},function(data){
+        })
+      }else{  
+      }
+  })
+
+
+
+  $('.like-or-not').on('click','.nt-add',function(){
+    var id = $(this).attr('data-id');
+    $.get('/good',{id:id},function(data){
+    })
+  })
+
+
+  $('.like-or-not').on('click','.nt-cut',function(){
+    var id = $(this).attr('data-id');
+    $.get('/cancle',{id:id},function(data){
+
+    })
+  })
+
+</script>

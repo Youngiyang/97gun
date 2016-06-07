@@ -1,0 +1,4 @@
+$("tbody").html('<%= j render(@categroys) %>');
+$("#will_page").html('<%=j will_paginate @categroys');
+$('.pagination a').attr('data-remote', 'true');
+

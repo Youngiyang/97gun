@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <%= yield :css %>
+</head>
+<body class="top">
+
+<div id="wrapper">
+  <header class="header header--fix">
+  <div class="inner">
+    <div class="headerLogo">
+      <a href="/">
+      <%= image_tag "97gun.png", alt: "97gun", style: "height: 93px;padding-top: 25px; padding-left: 55px;" %>
+      </a>
+    </div>
+    <div class="headerMenu js-menu-btn"><a href=""><i></i></a></div>
+    <nav class="header__right">
+      <ul class="header__nav">
+        <li class="is-current"><a href="/">最新生冷</a></li>
+            <li><a href="/classical">经典超冷</a></li>
+            <% if current_user %>
+              <li><a href="/freezer">我的冰箱</a>
+            <% else %>
+              <li><a href="/login">我的冰箱</a>
+            <% end %>
+             <!-- <li><a href="/about">关于</a> -->
+            <% if current_user %>
+              <li><a href="#"><%= current_user.name %></a></li>
+              <li><%= link_to '退出', logout_path, method: :delete %></li>
+            <% else %>
+              <li><a href="/login">登录/注册</a></li>
+            <% end %>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+  <%= yield %>
+  <footer class="footer">
+    <div class="copyright">COPYRIGHT &copy; YOUNGI. ALL RIGHTS RESERVED.</div>
+  </footer>
+</div>
+
+
+</body>
+<script>
+$(".area-tag a").click(function() {
+  $(this).addClass('botton-active')
+});
+function goPAGE() {
+      if ((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {
+        alert('请使用PC浏览');
+      }else{
+      }
+    }
+    goPAGE();
+</script>
+</html>

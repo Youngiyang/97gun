@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  <%= yield :css %>
+</head>
+<body calss="top">
+
+<div id="wrapper">
+  <div class="login">
+    <%= yield %>
+  </div>
+<footer class="footer">
+  <div class="copyright">COPYRIGHT &copy; YOUNGI. ALL RIGHTS RESERVED.</div>
+</footer>
+
+
+<script>
+ var hideNotice = function(){
+     $(".notice").fadeOut("slow");
+ }
+ setTimeout(hideNotice, 4000);
+</script>
+
+</div>
+
+
+<script type="text/javascript">
+var wait=60;
+function time(o) {
+  if (wait == 0) {
+      o.removeAttribute("disabled");
+      o.value="免费获取验证码";
+      wait = 60;
+  } else {
+      o.setAttribute("disabled", true);
+      o.value="重新发送(" + wait + ")";
+      wait--;
+      setTimeout(function() {
+          time(o)
+      },
+      1000)
+  }
+}
+// document.getElementById("btn").onclick=function(){time(this);}
+$('#btn').click(function(){
+  // time(this);
+  var mobile = document.getElementById("user_mobile")
+  if (mobile.value==0){
+    return false;
+  }
+  else{
+    time(this);
+    $.ajax({
+      type: 'POST',
+      url: '<%= send_code_path %>',
+      data: {
+        mobile: function(){
+          return $("#user_mobile").val()
+        }
+      }
+    })
+  }
+});
+
+
+function goPAGE() {
+      if ((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {
+        alert('请使用PC浏览');
+      }else{
+      }
+    }
+    goPAGE();
+</script>
+
+</body>
+</html>

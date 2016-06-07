@@ -1,0 +1,27 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  schema_search_path: public
+  su_username: postgres
+  su_password: postgres1234
+  pool: 5
+
+development:
+  <<: *default
+  host: localhost
+  database: nineseven_development
+  username: postgres
+  password: postgres1234
+
+test:
+  <<: *default
+  host: localhost
+  database: nineseven_test
+  username: postgres
+  password: postgres1234
+
+production:
+  <<: *default
+  database: nineseven
+  username: youngi
+  password: Qq1234567
